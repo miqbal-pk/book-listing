@@ -1,0 +1,38 @@
+<?php
+use Drupal\Core\Database\Database;
+
+/**
+ * Implements hook_schema().
+ */
+function user_book_inventory_schema(){
+    $schema['user_book_inventory'] = array(
+        'description' => 'The table for storing the user  book information',
+        'fields' => array(
+            'user_id' => array(
+                'description' => 'Primary identifier for User',
+                'type' => 'int',
+                'not null' => TRUE,
+                'unsigned' => TRUE,
+            ),
+            'book_id' => array(
+                'description' => 'Primary identifier for Book node',
+                'type' => 'int',
+                'not null' => TRUE,
+                'unsigned' => TRUE,
+            ),
+            'is_buy' => array(
+                'description' => 'Flag',
+                'type' => 'int',
+                'length' => 2,
+                'null' => TRUE,
+            ),
+            'created' => array(
+            'description' => 'created',
+            'not null' => FALSE,
+            'mysql_type' => 'timestamp',
+            ),
+        ),
+        'primary key' => array('user_id', 'book_id'),
+    );
+    return $schema;
+}

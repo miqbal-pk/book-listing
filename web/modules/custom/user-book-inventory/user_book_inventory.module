@@ -1,0 +1,41 @@
+<?php 
+
+  function user_book_inventory_page_attachments(array &$attachments) 
+  {
+
+    $attachments['#attached']['library'][] = 'user_book_inventory/user_book_inventory';
+  }
+
+  /**
+ * Implements hook_views_pre_render().
+ */
+function user_book_inventory_views_pre_render($view) {
+  
+//modify the view results 
+
+  if (isset($view) && ($view->id() == 'books' && $view->current_display == 'page_2')) {
+    $database = \Drupal::database();
+    $user_id = \Drupal::currentUser()->id();
+    $books = $database->select('user_book_inventory', 'ubi')
+    ->condition('ubi.user_id', $user_id, '=')
+    ->condition('ubi.is_buy', 1, '=')
+    ->fields('ubi', ['user_id', 'book_id'])
+    ->execute()
+    ->fetchAll();
+    $book_ids = [];
+
+    foreach ($books as $book) {
+      $book_ids[]=$book->book_id;
+    }
+    $results = [];
+
+    foreach($view->result as $row){
+
+      if(in_array($row->nid,$book_ids)){
+        $results[] = $row;
+      }
+    }
+    $view->result = $results;
+
+  }
+}

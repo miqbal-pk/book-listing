@@ -1,0 +1,4 @@
+user_book_inventory:
+  version: 1.x
+  js:
+    js/ajax.js: {}

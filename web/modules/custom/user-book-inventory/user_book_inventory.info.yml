@@ -1,0 +1,8 @@
+name: User Book Inventory
+type: module
+description: ' custom drupal 9 module'
+package: custom
+core_version_requirement: ^9 || ^10
+
+libraries:
+  - user_book_inventory/user_book_inventory

@@ -1,0 +1,16 @@
+user_book_inventory.welcome:
+  path: '/welcome'
+  defaults:
+    _controller: 'Drupal\user_book_inventory\Controller\InventoryController::welcome'
+    _title: 'Welcome to techX session'
+  requirements:
+    _permission: 'access content'
+
+user_book_inventory.call:
+  path: '/call/ajax/inventory'
+  defaults:
+    _controller: 'Drupal\user_book_inventory\Controller\InventoryController::call_ajax'
+    _title: 'Make db entry'
+  methods:  [POST]
+  requirements:
+    _permission: 'access content'
