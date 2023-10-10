@@ -94,7 +94,18 @@ function olivero_preprocess_node(&$variables) {
   if ($variables['teaser'] || !empty($variables['content']['comments']['comment_form'])) {
     unset($variables['content']['links']['comment']['#links']['comment-add']);
   }
-
+    $database = \Drupal::database();
+    $user_id = \Drupal::currentUser()->id();
+    $books = $database->select('user_book_inventory', 'ubi')
+    ->condition('ubi.user_id', $user_id, '=')
+     ->condition('ubi.book_id', $variables['node']->id(),'=')
+    ->condition('ubi.is_buy', 1, '=')
+    ->fields('ubi', ['user_id', 'book_id'])
+    ->execute()
+    ->fetchAll();
+    if(empty($books)){
+      $variables['not_book_added'] = true;
+    }
   // Apply custom date formatter to "date" field.
   if (!empty($variables['date']) && !empty($variables['display_submitted']) && $variables['display_submitted'] === TRUE) {
     $variables['date'] = \Drupal::service('date.formatter')->format($variables['node']->getCreatedTime(), 'olivero_medium');

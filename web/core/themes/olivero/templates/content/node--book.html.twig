@@ -108,7 +108,7 @@
   <div{{ content_attributes.addClass('node__content', layout) }}>
     {# Comments not part of content, so they won't inherit .text-content styles. #}
     {{ content|without('comment') }}
-    {% if view_mode == 'full' and logged_in %}
+    {% if view_mode == 'full' and logged_in and not_book_added %}
      <button class="buy-book-button button button--primary js-form-submit form-submit" nid="{{node.id}}"> Add to Inventory</button>
     {% endif %}
   </div>
